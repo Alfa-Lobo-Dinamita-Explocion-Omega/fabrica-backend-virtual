@@ -1,19 +1,17 @@
 package com.udea.edu.co.busquedadevuelos.backendvirtual.controllers;
 
 import com.udea.edu.co.busquedadevuelos.backendvirtual.controllers.dto.request.CreateFlightDto;
+import com.udea.edu.co.busquedadevuelos.backendvirtual.controllers.dto.request.UpdateFlightDto;
 import com.udea.edu.co.busquedadevuelos.backendvirtual.controllers.dto.response.FlightsResponse;
 import com.udea.edu.co.busquedadevuelos.backendvirtual.services.VuelosService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import com.udea.edu.co.busquedadevuelos.backendvirtual.entities.VueloData;
-
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.http.ResponseEntity;
+
 
 
 @RestController
@@ -38,9 +36,9 @@ public class VuelosController {
         return ResponseEntity.ok(vuelos);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<VueloData> getFlightById(@PathVariable Long id) {
-        Optional<VueloData> flightOptional = this.vuelosService.getFlightById(id);
+    @GetMapping("/{numeroVuelo}")
+    public ResponseEntity<VueloData> getFlightById(@PathVariable String numeroVuelo) {
+        Optional<VueloData> flightOptional = this.vuelosService.getFlightByNumeroVuelo(numeroVuelo);
         return flightOptional.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -53,6 +51,24 @@ public class VuelosController {
         List<VueloData> vueloData = this.vuelosService.listarVuelosIdaVuelta(page, size);
         return ResponseEntity.ok(vueloData);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteFligt(@PathVariable Long id){
+        this.vuelosService.deleteFlight(id);
+        return ResponseEntity.ok().build();
+    }
+
+    
+
+    @PutMapping()
+    public ResponseEntity putFligt(@RequestBody UpdateFlightDto fligh) {
+        this.vuelosService.putFlight(fligh);
+        return ResponseEntity.ok().build();
+    }
+
+
+    
+    
 
 
 }
