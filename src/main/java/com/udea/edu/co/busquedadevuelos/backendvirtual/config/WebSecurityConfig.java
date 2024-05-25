@@ -45,7 +45,7 @@ public class WebSecurityConfig {
                 .authenticated());
         http.sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authenticationManager(authenticationManager);
-        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        //http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
