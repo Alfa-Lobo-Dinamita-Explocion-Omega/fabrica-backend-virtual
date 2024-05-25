@@ -40,12 +40,10 @@ public class WebSecurityConfig {
                         "/api/v1/auth/**",
                         "/api/v1/vuelos/**"
                         )
-                .permitAll()
-                .anyRequest()
-                .authenticated());
+                .permitAll());
         http.sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authenticationManager(authenticationManager);
-        //http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
