@@ -5,8 +5,11 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import com.udea.edu.co.busquedadevuelos.backendvirtual.controllers.dto.request.CreateFlightDto;
+import com.udea.edu.co.busquedadevuelos.backendvirtual.controllers.dto.request.UpdateFlightDto;
 import com.udea.edu.co.busquedadevuelos.backendvirtual.controllers.dto.response.FlightsResponse;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -61,6 +64,25 @@ public class VuelosServiceImpl implements VuelosService {
                 .porcentajeImpuestos(createFlightDto.getPorcentajeImpuestos())
                 .build();
         vueloRepository.save(vueloData);
+    }
+
+    @Override
+    public void deleteFlight(Long id) {
+        this.vueloRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<VueloData> getFlightByNumeroVuelo(String numeroVuelo) {
+        Optional<VueloData> vuOptional = this.vueloRepository.findByNumeroVuelo(numeroVuelo);
+        return vuOptional;
+    }
+
+
+    @Override
+    public void putFlight(UpdateFlightDto fligh) {
+        VueloData vueloData = this.vueloRepository.getReferenceById(fligh.id());
+        BeanUtils.copyProperties(fligh, vueloData);
+        vueloData = this.vueloRepository.save(vueloData);
     }
 
 }

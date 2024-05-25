@@ -1,6 +1,7 @@
 package com.udea.edu.co.busquedadevuelos.backendvirtual.services;
 
 import com.udea.edu.co.busquedadevuelos.backendvirtual.controllers.dto.request.CreateFlightDto;
+import com.udea.edu.co.busquedadevuelos.backendvirtual.controllers.dto.request.UpdateFlightDto;
 import com.udea.edu.co.busquedadevuelos.backendvirtual.controllers.dto.response.FlightsResponse;
 import com.udea.edu.co.busquedadevuelos.backendvirtual.entities.VueloData;
 import java.util.List;
@@ -18,4 +19,10 @@ public interface VuelosService {
             Long size
     );
     void createFlight(CreateFlightDto createFlightDto);
+
+    void deleteFlight(Long id);
+
+    Optional<VueloData> getFlightByNumeroVuelo(String numeroVuelo);
+
+    void putFlight(UpdateFlightDto fligh);
 }
